@@ -1,0 +1,40 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtualenv
+venv/
+.env/
+.venv/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+
+# VSCode (falls jemand das nutzt)
+.vscode/
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Logs / temporäres Zeug
+logs/
+*.log
+*.tmp
+
+# Modelle (falls groß)
+models/*
+!models/.gitkeep
+
+
+# Reports, falls groß generiert (PDFs etc.)
+reports/*.pdf
+reports/figures/*
+!reports/figures/.gitkeep

@@ -1,0 +1,1 @@
+#TODO: Ähnlich wie in naive_bayes.py eine LSTM Pipeline bauen
