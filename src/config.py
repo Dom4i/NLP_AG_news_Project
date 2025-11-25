@@ -20,3 +20,16 @@ CLASS_NAMES = {
     3: "Business",
     4: "Science",
 }
+
+# Anzahl Klassen (praktisch fürs LSTM)
+NUM_CLASSES = len(CLASS_NAMES)
+
+# LSTM / Tokenizer Settings
+MAX_VOCAB_SIZE = 20000
+MAX_SEQ_LEN = 200
+
+EMBED_DIM = 128
+LSTM_UNITS = 128
+
+BATCH_SIZE = 64
+EPOCHS = 5
