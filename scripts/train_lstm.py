@@ -9,8 +9,8 @@ from src.preprocessing import get_text_and_labels
 from src.lstm import build_lstm_model
 from src.evaluation import evaluate_model
 from src.config import MAX_VOCAB_SIZE, MAX_SEQ_LEN, BATCH_SIZE, EPOCHS
-import matplotlib.pyplot as plt
-
+from src.visualization import plot_history, plot_confusion_matrix
+from src.config import CLASS_NAMES
 
 class KerasPredictWrapper:
     """
@@ -72,7 +72,7 @@ def main():
     model = build_lstm_model(vocab_size=vocab_size)
     model.summary()
 
-    # 🔴 Labels für Training auf 0..3 mappen (Keras braucht 0-based Klassen)
+    # Labels für Training auf 0..3 mappen (Keras braucht 0-based Klassen)
     y_train_0based = y_train.values - 1
 
     history = model.fit(
@@ -87,13 +87,25 @@ def main():
 
     # 9. Evaluation mit der bestehenden evaluate_model-Funktion
     wrapped_model = KerasPredictWrapper(model)
+    y_pred = wrapped_model.predict(X_test_pad)
+
     evaluate_model(wrapped_model, X_test_pad, y_test, title="LSTM (Keras)")
 
-    plt.plot(history.history["accuracy"], label="train acc")
-    plt.plot(history.history["val_accuracy"], label="val acc")
-    plt.legend()
-    plt.show()
+    # 10. Confusion Matrix Plot (zusätzlich)
+    labels = sorted(CLASS_NAMES.keys())
+    target_names = [CLASS_NAMES[l] for l in labels]
 
+    # Prozentwerte pro Klasse
+    plot_confusion_matrix(
+        y_test,
+        y_pred,
+        labels=labels,
+        target_names=target_names,
+        title="LSTM Confusion Matrix (normalized)",
+        normalize=True
+    )
+
+    plot_history(history)
 
 if __name__ == "__main__":
     main()
