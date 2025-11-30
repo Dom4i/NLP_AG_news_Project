@@ -1,6 +1,6 @@
 #TODO: Ähnlich wie in naive_bayes.py eine LSTM Pipeline bauen
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Embedding, LSTM, Dense, Dropout
+from tensorflow.keras.layers import Embedding, LSTM, Dense, Dropout, Bidirectional
 
 from .config import NUM_CLASSES, EMBED_DIM, LSTM_UNITS, MAX_SEQ_LEN
 
@@ -13,16 +13,17 @@ def build_lstm_model(
     num_classes: int = NUM_CLASSES,
 ):
     """
-    Baut ein einfaches LSTM-Modell für Textklassifikation.
+    Baut ein etwas stärkeres LSTM-Modell für Textklassifikation.
     """
     model = Sequential()
     model.add(Embedding(
         input_dim=vocab_size,
         output_dim=embedding_dim,
-        input_length=input_length
+        mask_zero=True,   # <-- wichtig, Padding ignorieren
     ))
-    model.add(LSTM(lstm_units))
-    model.add(Dropout(0.5))
+    # Bidirektionales LSTM hilft oft stark bei Text
+    model.add(Bidirectional(LSTM(lstm_units)))
+    model.add(Dropout(0.3))
     model.add(Dense(num_classes, activation="softmax"))
 
     model.compile(
