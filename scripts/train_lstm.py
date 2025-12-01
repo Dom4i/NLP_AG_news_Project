@@ -9,7 +9,16 @@ from src.preprocessing import get_text_and_labels
 from src.lstm import build_lstm_model
 from src.evaluation import evaluate_model
 from src.config import MAX_VOCAB_SIZE, MAX_SEQ_LEN, BATCH_SIZE, EPOCHS
-from src.visualization import plot_history, plot_confusion_matrix
+from src.visualizationLSTM import (
+    plot_history,
+    plot_confusion_matrix,
+    plot_prediction_confidence,
+    show_misclassified_examples,
+    plot_tsne_embeddings,
+    plot_class_distribution,
+    plot_error_vs_length,
+    plot_confidence_per_class
+)
 from src.config import CLASS_NAMES
 from tensorflow.keras.callbacks import EarlyStopping
 
@@ -114,7 +123,23 @@ def main():
         normalize=True
     )
 
+    print("\n=== Zusätzliche Visualisierungen ===")
     plot_history(history)
+
+    proba = model.predict(X_test_pad)
+    plot_prediction_confidence(proba)
+
+    show_misclassified_examples(X_test_text, y_test, y_pred, CLASS_NAMES)
+
+    plot_tsne_embeddings(model, X_test_pad, y_test, CLASS_NAMES)
+
+    plot_class_distribution(y_train, y_test, CLASS_NAMES)
+
+    plot_error_vs_length(X_test_text, y_test, y_pred)
+
+    proba = model.predict(X_test_pad)
+    plot_confidence_per_class(proba, y_test.values, CLASS_NAMES)
+
 
 if __name__ == "__main__":
     main()
