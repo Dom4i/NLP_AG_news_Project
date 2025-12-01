@@ -11,6 +11,7 @@ from src.evaluation import evaluate_model
 from src.config import MAX_VOCAB_SIZE, MAX_SEQ_LEN, BATCH_SIZE, EPOCHS
 from src.visualization import plot_history, plot_confusion_matrix
 from src.config import CLASS_NAMES
+from tensorflow.keras.callbacks import EarlyStopping
 
 class KerasPredictWrapper:
     """
@@ -75,6 +76,13 @@ def main():
     # Labels für Training auf 0..3 mappen (Keras braucht 0-based Klassen)
     y_train_0based = y_train.values - 1
 
+    #EarlyStopping hinzugefügt, um Overfitting zu begrenzen
+    early_stop = EarlyStopping(
+        monitor="val_loss",
+        patience=2,
+        restore_best_weights=True
+    )
+
     history = model.fit(
         X_train_pad,
         y_train_0based,
@@ -82,6 +90,7 @@ def main():
         batch_size=BATCH_SIZE,
         validation_split=0.1,
         shuffle=True,  # zur Sicherheit explizit
+        callbacks=[early_stop],  # ⬅ wichtig
         verbose=1,
     )
 

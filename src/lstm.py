@@ -23,7 +23,7 @@ def build_lstm_model(
     ))
     # Bidirektionales LSTM hilft oft stark bei Text
     model.add(Bidirectional(LSTM(lstm_units)))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.5)) #<--- wurde erhöht um Overfitting zu verhindern
     model.add(Dense(num_classes, activation="softmax"))
 
     model.compile(
