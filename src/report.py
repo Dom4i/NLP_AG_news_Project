@@ -6,7 +6,7 @@ Project Report
 Authors: Gössl Marcel, Marek Simon, Schrenk Dominik, Unger Miriam
 Date: 06.11.2025
 Course: Natural Language Processing
-
+Github Repository: https://github.com/Dom4i/NLP_AG_news_Project
 ----------------------------------------
 1. Dataset Description
 ----------------------------------------
@@ -15,7 +15,7 @@ Course: Natural Language Processing
     Diese Dateien bestehen aus mehr als  120 000 Proben von Nachrichtenartikeln und enthält 3 Spalten. Die erste Spalte ist die Klassen-ID, die zweite Spalte der Titel und die dritte Spalte die Beschreibung. Die Klassen-IDs sind von 1 bis 4 nummeriert, wobei 1 für Welt, 2 für Sport, 3 für Wirtschaft und 4 für Wissenschaft/Technik steht.
 • How many images/classes does it contain?
     Gesamtanzahl der Zeilen: 127 600
-    Klassen:
+    Klassen: 4
 
 • Was the dataset balanced or imbalanced?
     Gebalenced welches man an einer späteren Visualization gut erkennen kann.
@@ -38,12 +38,10 @@ Course: Natural Language Processing
 ----------------------------------------
 3. Problems and Solutions
 ----------------------------------------
-• Which problems or challenges did you encounter?
-   Problem mit #39
-   Und AP APF Reuter New York
-
-
-• How did you solve or work around them?
+• Which problems or challenges did you encounter and how did you solve them?
+   Uns ist aufgefallen dass in den top 20 Wörtern überall 39 vorkam und fanden das komisch. Nach kurzer Recherche haben wir herausgefunde dass 39 für Apostroph (') steht, was in den Texten oft vorkommt. Dies konnten wir durch eine einfache html-Entität Korrektur lösen.
+   Das gleiche für "AP", "APF", "Reuter" und "New York", welche einfach Nachrichtenagenturen sind. Diese haben wir entfernt, jedoch sind noch zahlreiche weitere Namen im Text, die jedoch nicht wirklich was an der Accuracy verändern.
+   Requirements haben nicht immer mit den Versionen zusammengepasst, haben wir aber mit einer virtuellen Umgebung gelöst.
 
 ----------------------------------------
 4. Implementation Details
@@ -55,7 +53,7 @@ Course: Natural Language Processing
 ----------------------------------------
 5. Results and Evaluation
 ----------------------------------------
-    Wir haben zwei Modelle getestet: Naive Bayes und ein LSTM. Beide arbeiten sehr gut und erreichen über 90 % Genauigkeit. Besonders einfach zu erkennen sind die Kategorien Sports und World, etwas schwieriger sind Business und Science,
+    Wir haben zwei Modelle getestet: Naive Bayes und ein LSTM. Beide arbeiten sehr gut und erreichen über 90% Genauigkeit. Besonders einfach zu erkennen sind die Kategorien Sports und World, etwas schwieriger sind Business und Science,
     weil sich die Themen überschneiden. LSTM ist insgesamt ein bisschen besser, besonders bei längeren oder komplexeren Texten. Die zusätzlichen Plots wie Confusion Matrix, t-SNE oder Feature-Heatmaps helfen uns zu sehen,
     welche Texte das Modell gut oder schlecht versteht und welche Wörter oder Muster besonders wichtig sind.
 
